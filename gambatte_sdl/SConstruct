@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 cflags   = ARGUMENTS.get('CFLAGS', '-Wall -Wextra -O2 -fomit-frame-pointer')
 cxxflags = ARGUMENTS.get('CXXFLAGS', cflags + ' -fno-exceptions -fno-rtti')
@@ -48,7 +49,7 @@ version_str_def = []
 if Dir('../.git').exists():
 	try:
 		git_revno = subprocess.check_output("git rev-list HEAD --count", shell=True).strip()
-		version_str_def = [ 'GAMBATTE_SDL_VERSION_STR', r'\"r' + git_revno + r'\"' ]
+		version_str_def = [ 'GAMBATTE_SDL_VERSION_STR', r'\"r' + git_revno.decode(sys.stdout.encoding) + r'\"' ]
 	except subprocess.CalledProcessError:
 		pass
 
